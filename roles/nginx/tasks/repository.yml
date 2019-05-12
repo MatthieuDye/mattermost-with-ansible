@@ -1,0 +1,12 @@
+---
+- name: Add nginx signing key (Debian/Ubuntu)
+  apt_key:
+    url: http://nginx.org/keys/nginx_signing.key
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Add nginx repository (Ubuntu 18.04)
+  apt_repository: repo={{item}} state=present update_cache=yes
+  with_items:
+    - 'deb http://nginx.org/packages/ubuntu/ xenial nginx'
+    - 'deb-src http://nginx.org/packages/ubuntu/ xenial nginx'
